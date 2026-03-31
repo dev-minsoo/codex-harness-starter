@@ -1,0 +1,30 @@
+{
+  "name": "codex-harness-starter",
+  "version": "0.1.0",
+  "description": "Bootstrap a goal-specific Codex harness in a new directory with a minimal role set, starter structure, and first execution prompt.",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "plugin",
+    "harness",
+    "starter",
+    "bootstrap"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Harness Starter",
+    "shortDescription": "Generate a minimal Codex harness for a new project.",
+    "longDescription": "Helps users start from an empty directory, decide whether a harness is needed, choose the smallest useful role set, scaffold the initial files, and produce the first prompt to begin real work.",
+    "developerName": "dev-minsoo",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Design the smallest harness in this empty directory for turning a PRD into implementation work.",
+      "Decide the roles, starter files, and first prompt for a code review harness."
+    ],
+    "brandColor": "#1F4B99"
+  }
+}

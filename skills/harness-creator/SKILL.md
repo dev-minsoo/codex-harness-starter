@@ -116,5 +116,6 @@ starter-prompts/
 - `prd-to-delivery.md`
 - `code-review.md`
 - `research-to-write.md`
+- `custom-harness.md`
 
 셋 중 잘 맞는 것이 없다면 억지로 맞추지 말고 사용자 맞춤 첫 프롬프트를 새로 작성합니다.

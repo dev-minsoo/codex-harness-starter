@@ -2,6 +2,12 @@
   "name": "codex-harness-starter",
   "version": "0.1.0",
   "description": "Bootstrap a goal-specific Codex harness in a new directory with a minimal role set, starter structure, and first execution prompt.",
+  "author": {
+    "name": "dev-minsoo",
+    "url": "https://github.com/dev-minsoo"
+  },
+  "homepage": "https://github.com/dev-minsoo/codex-harness-starter",
+  "repository": "https://github.com/dev-minsoo/codex-harness-starter",
   "license": "MIT",
   "keywords": [
     "codex",
@@ -21,10 +27,13 @@
       "Read",
       "Write"
     ],
+    "websiteURL": "https://github.com/dev-minsoo/codex-harness-starter",
     "defaultPrompt": [
       "Design the smallest harness in this empty directory for turning a PRD into implementation work.",
-      "Decide the roles, starter files, and first prompt for a code review harness."
+      "Decide the roles, starter files, and first prompt for a code review harness.",
+      "Create a reusable harness for turning research notes into a publishable draft."
     ],
-    "brandColor": "#1F4B99"
+    "brandColor": "#1F4B99",
+    "screenshots": []
   }
 }

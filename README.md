@@ -1,227 +1,203 @@
 # Codex Harness Starter
 
-`codex-harness-starter`는 빈 디렉토리에서 바로 시작할 수 있는 Codex 플러그인 스타터입니다.
+`codex-harness-starter`는 빈 프로젝트 디렉토리에서 바로 사용할 수 있는 한국어 기반 Codex 에이전트 팀 하네스를 만드는 플러그인입니다.
 
-이 저장소의 목적은 문서가 많은 메타 템플릿을 제공하는 것이 아니라, 사용자의 목표에 맞는 작업용 하네스를 빠르게 만들고 실제 개발이나 작성 작업으로 바로 넘어가게 하는 것입니다.
+이 저장소의 목적은 메타 문서를 길게 작성하는 것이 아니라, 특정 도메인에 맞는 에이전트 팀을 빠르게 설계하고 즉시 실행 가능한 시작점까지 만드는 것입니다.
 
-## 한눈에 보기
+## 이 프로젝트는 무엇인가
 
-- 새 디렉토리에서 목적에 맞는 하네스를 빠르게 만들고 싶을 때 사용합니다.
-- 핵심 스킬은 `harness-creator`입니다.
-- 결과물은 설명 문서보다 먼저 `역할`, `파일 구조`, `첫 SKILL.md`, `첫 실행 프롬프트`입니다.
+이 플러그인은 `harness-creator`라는 메타 스킬을 중심으로 동작합니다.
 
-## 설치 방법
+이 스킬은 사용자의 목표를 보고 아래를 한 번에 설계합니다.
 
-이 저장소는 Codex 플러그인으로 사용합니다.
+- 어떤 에이전트 팀이 필요한지
+- 역할을 몇 개로 둘지
+- 각 역할의 에이전트를 어떻게 정의할지
+- 팀 전체를 움직이는 스킬을 어떻게 쓸지
+- 검증을 어디에 둘지
+
+즉 이 프로젝트의 정체성은 "반복 워크플로 설명기"보다 "프로젝트용 에이전트 팀 하네스 메이커"에 더 가깝습니다.
+
+## 핵심 철학
+
+- 기본 산출물의 중심은 문서가 아니라 에이전트 팀입니다.
+- 역할별 에이전트 생성은 선택이 아니라 기본값입니다.
+- 팀 하네스에는 가능한 한 검증 역할이나 검증 단계가 포함되어야 합니다.
+- 루트 `AGENTS.md`는 가볍게 유지합니다.
+- 기본 출력은 한국어입니다.
+- 모든 결과물은 현재 프로젝트 안에서 바로 쓸 수 있어야 합니다.
+
+## 기본 구조
+
+프로젝트에 생성되는 기본 구조는 아래를 기준으로 합니다.
+
+```text
+AGENTS.md
+.agents/
+  skills/
+    <team-skill>/
+      SKILL.md
+.codex/
+  agents/
+    <role>.toml
+```
+
+각 요소의 역할은 다음과 같습니다.
+
+- `AGENTS.md`: 하네스 구조, 사용법, 산출물 정의
+- `.agents/skills/<team-skill>/SKILL.md`: 팀 오케스트레이션 스킬
+- `.codex/agents/<role>.toml`: 역할별 에이전트 정의
+
+에이전트 정의는 최소형만 가능한 것이 아닙니다. 필요에 따라 아래 같은 필드도 함께 쓸 수 있습니다.
+
+- `model`
+- `model_reasoning_effort`
+- `sandbox_mode`
+- `[mcp_servers.<name>]`
+- `url`
+
+## 어떻게 사용하는가
+
+이 저장소 자체는 Codex 플러그인으로 로드해 사용합니다.
 
 일반적인 흐름은 다음과 같습니다.
 
-1. 이 저장소를 로컬에 clone 합니다.
-2. Codex가 읽는 플러그인 경로에 이 저장소를 둡니다.
-3. Codex에서 플러그인을 활성화합니다.
-4. 하네스를 만들고 싶은 빈 디렉토리로 이동합니다.
-5. 그 디렉토리에서 `harness-creator`를 호출합니다.
+1. 이 저장소를 Codex가 읽는 플러그인 경로에 둡니다.
+2. Codex에서 플러그인을 활성화합니다.
+3. 하네스를 만들고 싶은 빈 프로젝트 디렉토리로 이동합니다.
+4. 그 디렉토리에서 `harness-creator`를 호출합니다.
+5. 목표를 한두 줄로 설명합니다.
 
 예시:
 
-```bash
-git clone https://github.com/dev-minsoo/codex-harness-starter.git
-cd some-empty-project
-```
-
-그 다음 Codex에 아래처럼 요청하면 됩니다.
-
 ```md
-이 디렉토리에서 `harness-creator` 스킬을 사용해줘.
+이 디렉토리에서 `harness-creator`를 사용해줘.
 
-내 목표는 다음이야: 결제 실패 복구 플로우를 PRD에서 실제 구현 작업으로 연결하고 싶어.
+내 목표는 다음이야: 새로운 서비스 런칭을 위한 에이전트 팀 하네스를 만들고 싶어.
 
-전용 하네스가 필요하다면 가장 작은 역할 세트를 정하고, 초기 구조를 만들고, 첫 `SKILL.md`와 첫 실행 프롬프트까지 작성해줘.
+기본적으로 역할별 에이전트와 팀 스킬을 함께 만들고, 검증 역할도 포함해줘.
+루트 `AGENTS.md`는 가볍게 유지하고, 출력은 전부 한국어로 해줘.
 ```
 
-플러그인 로딩 위치나 활성화 방식은 Codex 실행 환경에 따라 다를 수 있습니다. 이 저장소는 플러그인 내용물 자체에 초점을 두고 있으며, 설치 경로는 사용 중인 Codex 환경 규칙에 맞추면 됩니다.
+## 하네스는 어떻게 만들어지는가
 
-## 사용 흐름
+`harness-creator`는 보통 아래 순서로 동작합니다.
 
-실제 사용 흐름은 보통 아래처럼 진행됩니다.
+1. 목표를 다시 정리합니다.
+2. 전용 하네스가 필요한지 판단합니다.
+3. 가장 작은 역할 세트를 고릅니다.
+4. 검증 역할 또는 검증 단계를 포함시킵니다.
+5. 역할별 에이전트 초안을 만듭니다.
+6. 팀 오케스트레이션 스킬 초안을 만듭니다.
+7. 루트 `AGENTS.md`를 가볍게 정리합니다.
 
-1. 빈 디렉토리에서 작업 목표를 한두 줄로 설명합니다.
-2. `harness-creator`가 하네스 필요 여부를 판단합니다.
-3. 필요하면 최소 역할 세트와 파일 구조를 제안하거나 생성합니다.
-4. 첫 `skills/<role>/SKILL.md`를 작성합니다.
-5. 바로 다음에 실행할 프롬프트를 만듭니다.
-6. 그 프롬프트로 실제 구현, 리뷰, 작성 작업에 들어갑니다.
-
-즉 이 플러그인은 하네스 설계 자체가 끝이 아니라, 실제 작업 시작점까지 이어주는 부트스트랩 도구입니다.
-
-## 무엇을 해주는가
-
-이 플러그인의 핵심 스킬은 `harness-creator`입니다.
-
-이 스킬은 다음 순서로 동작합니다.
-
-1. 사용자의 목표를 듣습니다.
-2. 하네스가 필요한지 판단합니다.
-3. 필요하면 가장 작은 역할 세트를 고릅니다.
-4. 초기 파일 구조를 제안하거나 생성합니다.
-5. 첫 `SKILL.md` 초안을 씁니다.
-6. 다음 단계에서 바로 실행할 첫 프롬프트를 만들어줍니다.
-
-즉 먼저 만드는 것은 설계 문서가 아니라 아래와 같은 실전 시작점입니다.
-
-- 어떤 하네스를 만들지
-- 역할을 몇 개 둘지
-- 첫 번째 스킬을 어떻게 쓸지
-- 첫 번째 실행 프롬프트를 무엇으로 할지
-
-## 저장소 구조
-
-```text
-.codex-plugin/
-  plugin.json
-AGENTS.md
-skills/
-  harness-creator/
-    SKILL.md
-starter-prompts/
-  code-review.md
-  custom-harness.md
-  prd-to-delivery.md
-  research-to-write.md
-```
-
-## 빠른 시작
-
-가장 간단한 시작 방법은 아래 순서입니다.
-
-1. 빈 디렉토리로 이동합니다.
-2. 아래 스타터 프롬프트 중 하나를 복사합니다.
-3. Codex에 붙여넣고 `harness-creator`로 하네스를 생성합니다.
-4. 생성된 첫 실행 프롬프트로 실제 작업을 시작합니다.
-
-## 추천 사용 사례
-
-- PRD나 기능 브리프를 구현 작업으로 전환하고 싶을 때
-- 코드 리뷰를 반복 가능한 워크플로로 만들고 싶을 때
-- 리서치 입력을 실제 문서 초안으로 빠르게 연결하고 싶을 때
-- 새 프로젝트마다 하네스 구조를 일관되게 만들고 싶을 때
-
-## 스타터 프롬프트
-
-### 1. PRD에서 구현으로
-
-```md
-이 디렉토리에서 `harness-creator` 스킬을 사용해줘.
-
-내 목표는 다음이야: 결제 실패 복구 플로우를 제품 요구사항에서 실제 구현 작업으로 연결하고 싶어.
-
-PRD나 기능 브리프를 실제 구현 작업으로 전환하는 재사용 가능한 하네스를 원해.
-
-다음을 해줘.
-
-1. 전용 하네스가 필요한지 판단해줘
-2. 가장 작은 유효 역할 세트를 골라줘
-3. 초기 플러그인 지향 파일 구조를 스캐폴딩해줘
-4. 첫 `skills/<role>/SKILL.md`를 작성해줘
-5. 실제 구현 작업을 시작하기 위해 내가 바로 실행할 첫 프롬프트를 만들어줘
-
-문서가 많은 프레임워크가 아니라 오늘 바로 쓸 수 있는 최소 하네스를 기준으로 해줘.
-```
-
-### 2. 코드 리뷰 하네스
-
-```md
-이 디렉토리에서 `harness-creator` 스킬을 사용해줘.
-
-내 목표는 다음이야: 프론트엔드 저장소에서 PR 단위 리뷰를 반복 가능한 절차로 만들고 싶어.
-
-리뷰 우선 개발이나 구조화된 코드 리뷰를 위한 재사용 가능한 하네스를 원해.
-
-다음을 해줘.
-
-1. 이 워크플로에 하네스를 만드는 것이 가치 있는지 판단해줘
-2. 리뷰에 필요한 가장 작은 역할 세트를 골라줘
-3. 최소 시작 파일을 스캐폴딩해줘
-4. 첫 리뷰 중심 `SKILL.md`를 작성해줘
-5. 실제 코드베이스에 바로 적용할 첫 프롬프트를 만들어줘
-
-직접적인 리뷰 실행, 리스크 식별, 구체적인 다음 행동에 치우쳐서 작성해줘.
-```
-
-### 3. 리서치에서 문서 작성으로
-
-```md
-이 디렉토리에서 `harness-creator` 스킬을 사용해줘.
-
-내 목표는 다음이야: 여러 자료를 모아 비교 분석 문서를 빠르게 쓰고 싶어.
-
-리서치 입력을 실제 문서 산출물로 전환하는 재사용 가능한 하네스를 원해.
-
-다음을 해줘.
-
-1. 전용 하네스가 필요한지 판단해줘
-2. 가장 작은 유효 역할 세트를 골라줘
-3. 초기 파일 구조를 스캐폴딩해줘
-4. 첫 `skills/<role>/SKILL.md`를 작성해줘
-5. 문서 생산을 시작하기 위해 내가 실행할 첫 프롬프트를 만들어줘
-
-하네스는 가볍게 유지하고 실제 초안을 빨리 만드는 방향으로 맞춰줘.
-```
-
-### 4. 범용 하네스 생성
-
-```md
-이 디렉토리에서 `harness-creator` 스킬을 사용해줘.
-
-내 목표는 다음이야: [여기에 목표 입력]
-
-이 목표를 위해 별도 하네스가 필요한지 먼저 판단해줘.
-
-필요하다면:
-
-1. 가장 작은 역할 세트를 정해줘
-2. 초기 파일 구조를 스캐폴딩해줘
-3. 첫 `skills/<role>/SKILL.md`를 작성해줘
-4. 내가 바로 실행할 첫 프롬프트를 만들어줘
-
-가능하면 역할 수를 최소로 유지하고, 문서보다 실행 가능한 파일을 우선해줘.
-```
-
-## 기대 산출물
+## 어떤 결과를 내는가
 
 좋은 첫 결과는 보통 아래 요소를 포함합니다.
 
 - 하네스 유형 한 줄 설명
-- 초기 역할 정의
+- 초기 팀 구성
 - 최소 디렉토리 구조
-- 첫 스킬 초안
-- 첫 실행 프롬프트
+- 역할별 `.codex/agents/*.toml`
+- 팀 스킬 `.agents/skills/<team-skill>/SKILL.md`
+- 검증 역할 또는 검증 단계 정의
 
-## 첫 화면 체크리스트
+예를 들어 스타트업 런칭 하네스라면 아래처럼 나올 수 있습니다.
 
-처음 사용할 때는 아래 네 가지만 확인하면 됩니다.
+- `market-analyst`: 시장 검증과 경쟁 분석
+- `business-modeler`: 비즈니스 모델과 유닛이코노믹스 설계
+- `mvp-architect`: MVP 범위와 로드맵 설계
+- `pitch-creator`: 투자자용 스토리라인과 피치덱 작성
+- `launch-reviewer`: 전체 일관성과 투자 준비도 검증
 
-1. 이 저장소가 Codex 플러그인으로 활성화되어 있는가
-2. 지금 작업 중인 디렉토리가 실제 하네스를 만들 빈 디렉토리인가
-3. 목표를 한두 줄로 명확히 설명했는가
-4. 역할 수를 최소로 유지하겠다는 기준이 있는가
+그리고 이에 대응하는 결과물은 아래처럼 나옵니다.
 
-## 확장 방향
+- `.codex/agents/market-analyst.toml`
+- `.codex/agents/business-modeler.toml`
+- `.codex/agents/mvp-architect.toml`
+- `.codex/agents/pitch-creator.toml`
+- `.codex/agents/launch-reviewer.toml`
+- `.agents/skills/startup-launcher/SKILL.md`
 
-처음에는 최소 하네스로 시작하고, 실제 반복 사용이 확인된 뒤에만 다음을 추가하는 것이 좋습니다.
+이 저장소에는 위 구조를 참고할 수 있는 실제 샘플도 포함되어 있습니다.
 
-- 역할별 스킬 분리
-- 추가 스타터 프롬프트
-- reference 문서
-- 자주 쓰는 스크립트
-- 마켓플레이스용 아이콘, 로고, 스크린샷
+- [examples/startup-launcher/AGENTS.md](/Users/amir.woo/plugins/codex-harness-starter/examples/startup-launcher/AGENTS.md)
+- [examples/startup-launcher/.agents/skills/startup-launcher/SKILL.md](/Users/amir.woo/plugins/codex-harness-starter/examples/startup-launcher/.agents/skills/startup-launcher/SKILL.md)
+- [examples/startup-launcher/.agents/skills/unit-economics-calculator/SKILL.md](/Users/amir.woo/plugins/codex-harness-starter/examples/startup-launcher/.agents/skills/unit-economics-calculator/SKILL.md)
+- [examples/startup-launcher/.agents/skills/pitch-deck-framework/SKILL.md](/Users/amir.woo/plugins/codex-harness-starter/examples/startup-launcher/.agents/skills/pitch-deck-framework/SKILL.md)
+- [examples/startup-launcher/.codex/agents/market-analyst.toml](/Users/amir.woo/plugins/codex-harness-starter/examples/startup-launcher/.codex/agents/market-analyst.toml)
+- [examples/startup-launcher/.codex/agents/business-modeler.toml](/Users/amir.woo/plugins/codex-harness-starter/examples/startup-launcher/.codex/agents/business-modeler.toml)
+- [examples/startup-launcher/.codex/agents/mvp-architect.toml](/Users/amir.woo/plugins/codex-harness-starter/examples/startup-launcher/.codex/agents/mvp-architect.toml)
+- [examples/startup-launcher/.codex/agents/pitch-creator.toml](/Users/amir.woo/plugins/codex-harness-starter/examples/startup-launcher/.codex/agents/pitch-creator.toml)
+- [examples/startup-launcher/.codex/agents/launch-reviewer.toml](/Users/amir.woo/plugins/codex-harness-starter/examples/startup-launcher/.codex/agents/launch-reviewer.toml)
 
-## 현재 상태
+이 샘플들은 최소형 예시가 아니라, `model`, `model_reasoning_effort`, `sandbox_mode`까지 포함한 richer schema 예시로 볼 수 있습니다.
+샘플의 실제 결과물 저장 위치는 숨김 폴더 대신 `_workspace/`를 사용합니다.
 
-현재 이 저장소는 다음에 초점을 맞춥니다.
+## 왜 검증을 기본 요소로 보는가
 
-- 플러그인 기본 메타데이터
-- `harness-creator` 스킬
-- 한국어 스타터 프롬프트
+이 플러그인은 검증을 특정 도메인 전용 요소가 아니라 거의 모든 하네스에 유용한 핵심 요소로 봅니다.
 
-로고, 스크린샷, 마켓플레이스용 시각 자산은 아직 포함하지 않았습니다.
+이유는 단순합니다.
+
+- 생성만 있는 팀은 과신하기 쉽습니다.
+- 검증 단계가 있으면 가정과 근거 부족이 빨리 드러납니다.
+- 팀 기반 하네스는 핸드오프가 많기 때문에 품질 게이트가 필요합니다.
+
+그래서 기본 추천은 아래 둘 중 하나입니다.
+
+- 검증 전용 역할 하나를 둔다
+- 팀 스킬 안에 명시적인 검증 단계를 둔다
+
+## 루트 AGENTS.md는 어떻게 다루는가
+
+이제 루트 `AGENTS.md`는 무거운 운영 매뉴얼이 아닙니다.
+
+가볍게 아래 세 섹션만 담는 것을 기본으로 합니다.
+
+- 구조
+- 사용법
+- 산출물
+
+그리고 표현 방식도 중요합니다. 좋은 `AGENTS.md`는 추상 설명보다 "팀 카탈로그"처럼 보여야 합니다.
+
+- 어떤 agent와 skill이 있는지
+- 각 파일이 무슨 역할인지
+- 어떤 결과물이 `_workspace/`에 쌓이는지
+
+팀의 상세 동작은 주로 아래에 둡니다.
+
+- 역할별 세부 실행 규칙: `.codex/agents/*.toml`
+- 팀 오케스트레이션 규칙: `.agents/skills/<team-skill>/SKILL.md`
+
+좋은 팀 스킬은 단순 절차 문서가 아니라 아래를 모두 담는 오케스트레이터에 가깝습니다.
+
+- 실행 모드
+- 에이전트 구성
+- phase별 워크플로우
+- 작업 규모별 모드
+- 데이터 전달 프로토콜
+- 에러 핸들링
+- 테스트 시나리오
+- 확장 스킬 연결
+
+## 현재 이 저장소가 잘하는 것
+
+- 빈 프로젝트에서 출발하는 하네스 설계
+- 한국어 중심 출력
+- 역할별 에이전트 초안 생성
+- 팀 스킬 초안 생성
+- 검증 포함 팀 구조 설계
+
+## 현재 한계
+
+- 실제 생성 자동화 코드가 있는 것은 아니고, 문서와 프롬프트 규칙 중심입니다.
+- 역할별 예시 `.toml` 샘플이 아직 많지 않습니다.
+- 도메인별 팀 템플릿 라이브러리는 더 추가할 수 있습니다.
+
+## 다음 확장 방향
+
+- planner / builder / validator 기본 팀 템플릿 추가
+- 도메인별 팀 샘플 추가
+- 검증 체크리스트 패턴 추가
+- 팀 간 통신 규칙 템플릿 추가

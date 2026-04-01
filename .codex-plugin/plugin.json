@@ -1,7 +1,7 @@
 {
   "name": "codex-harness-starter",
   "version": "0.1.0",
-  "description": "Bootstrap a goal-specific Codex harness in a new directory with a minimal role set, starter structure, and first execution prompt.",
+  "description": "빈 프로젝트 디렉토리에서 한국어 기반 Codex 에이전트 팀 하네스를 설계하는 플러그인입니다.",
   "author": {
     "name": "dev-minsoo",
     "url": "https://github.com/dev-minsoo"
@@ -13,14 +13,15 @@
     "codex",
     "plugin",
     "harness",
-    "starter",
-    "bootstrap"
+    "agents",
+    "team",
+    "korean"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Codex Harness Starter",
-    "shortDescription": "Generate a minimal Codex harness for a new project.",
-    "longDescription": "Helps users start from an empty directory, decide whether a harness is needed, choose the smallest useful role set, scaffold the initial files, and produce the first prompt to begin real work.",
+    "shortDescription": "프로젝트용 한국어 에이전트 팀 하네스를 설계합니다.",
+    "longDescription": "빈 프로젝트 디렉토리에서 시작해 도메인에 맞는 역할별 에이전트, 팀 오케스트레이션 스킬, 검증 구조를 설계하는 플러그인입니다.",
     "developerName": "dev-minsoo",
     "category": "Developer Tools",
     "capabilities": [
@@ -29,9 +30,9 @@
     ],
     "websiteURL": "https://github.com/dev-minsoo/codex-harness-starter",
     "defaultPrompt": [
-      "Design the smallest harness in this empty directory for turning a PRD into implementation work.",
-      "Decide the roles, starter files, and first prompt for a code review harness.",
-      "Create a reusable harness for turning research notes into a publishable draft."
+      "이 디렉토리에서 한국어 기반 에이전트 팀 하네스를 설계해줘. 역할별 에이전트와 팀 스킬, 검증 구조를 함께 만들어줘.",
+      "이 프로젝트를 위한 코드 리뷰 에이전트 팀을 설계해줘. 검증 역할을 포함하고 AGENTS.md는 가볍게 유지해줘.",
+      "이 디렉토리에서 PRD를 구현으로 연결하는 에이전트 팀 하네스를 설계해줘. 역할별 .toml 에이전트와 팀 스킬을 함께 정의해줘."
     ],
     "brandColor": "#1F4B99",
     "screenshots": []
